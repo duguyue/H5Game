@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>太阳与地球</title>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500" style="background: black;">
+        浏览器不支持Canvas元素
+    </canvas>
+    <script>
+        var canvas=document.getElementById("canvas");
+        var context=canvas.getContext("2d");
+        var time=0;
+        function draw() {
+            context.clearRect(0,0,500,500);
+
+            context.save();
+            context.strokeStyle="white";
+            context.beginPath();
+            context.arc(250,250,100,0,360,false);
+            context.closePath();
+            context.stroke();
+            context.restore();
+
+            context.beginPath();
+            context.arc(250,250,15,0,360,false);
+            context.closePath();
+            var sun=context.createRadialGradient(250,250,0,250,250,15);
+            sun.addColorStop(0,"#f80");
+            sun.addColorStop(0.5,"#f90");
+            sun.addColorStop(1,"#fa0");
+            context.fillStyle=sun;
+            context.fill();
+            context.restore();
+
+            context.save();
+            context.translate(250,250);
+            context.rotate((time%365)*(360/365)*Math.PI/180);
+            context.beginPath();
+            context.arc(0,-100,10,0,360,false);
+            context.closePath();
+            var earth=context.createRadialGradient(0,-100,0,0,-100,10);
+            earth.addColorStop(0,"#78b1e8");
+            earth.addColorStop(1,"#050c12");
+            context.fillStyle=earth;
+            context.fill();
+
+            context.restore();
+
+            time+=1;
+        }
+        setInterval(draw,50);
+    </script>
+</body>
+</html>
